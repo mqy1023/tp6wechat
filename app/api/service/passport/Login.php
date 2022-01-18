@@ -126,6 +126,26 @@ class Login extends BaseService
         // 记录登录态
         return $this->setSession();
     }
+	
+	/**
+	 * 微信小程序授权获取用户手机号
+	 * @param array $form
+	 * @return bool
+	 * @throws BaseException
+	 * @throws \think\db\exception\DataNotFoundException
+	 * @throws \think\db\exception\DbException
+	 * @throws \think\db\exception\ModelNotFoundException
+	 * @throws \think\Exception
+	 */
+	public function getMpWxMobile(array $form): string
+	{
+	    // 获取微信小程序登录态(session)
+	    $wxSession = PartyService::getMpWxSession($form['code']);
+	    // 解密encryptedData -> 拿到手机号
+	    $wxData = OauthService::wxDecryptData($wxSession['session_key'], $form['encryptedData'], $form['iv']);
+	    // 记录登录态
+	    return $wxData['purePhoneNumber'];
+	}
 
     /**
      * 保存oauth信息(第三方用户信息)
@@ -175,7 +195,7 @@ class Login extends BaseService
     private function register(array $data): void
     {
         // 查询用户是否已存在
-        // 用户存在: 更新用户登录信息
+        // 用户存在: 更新用户登录信息, 以手机号位准
         $userInfo = UserModel::detail(['mobile' => $data['mobile']]);
         if ($userInfo) {
             $this->updateUser($userInfo, $data['isParty'], $data['partyData']);

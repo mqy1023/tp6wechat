@@ -26,14 +26,14 @@ class WxUser extends WxBase
          * 其中 session_key 是对用户数据进行加密签名的密钥。为了自身应用安全，session_key 不应该在网络上传输。
          */
         $url = 'https://api.weixin.qq.com/sns/jscode2session';
-        $result = json_decode($this->get($url, [
+        $result = json_decode(getHttp($url, [
             'appid' => $this->appId,
             'secret' => $this->appSecret,
             'grant_type' => 'authorization_code',
             'js_code' => $code
         ]), true);
         if (isset($result['errcode'])) {
-            $this->error = $result['errmsg'];
+            $this->error = $result['errcode'] . '，' . $result['errmsg'];
             return false;
         }
         return $result;

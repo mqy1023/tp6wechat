@@ -1,6 +1,5 @@
 <?php
 namespace cores\traits;
-
 /**
  * 错误信息Trait类
  */

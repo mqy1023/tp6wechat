@@ -93,12 +93,13 @@ class Party extends BaseService
         $partyUserInfo = $partyData['userInfo'];
         $data = [
             'nick_name' => $partyUserInfo['nickName'],
-            'gender' => $partyUserInfo['gender']
+            'gender' => $partyUserInfo['gender'],
+			'avatar_url' => $partyUserInfo['avatarUrl']
         ];
         // 下载用户头像
-        if ($isGetAvatarUrl) {
-            $data['avatar_id'] = static::partyAvatar($partyUserInfo['avatarUrl']);
-        }
+        // if ($isGetAvatarUrl) {
+        //     $data['avatar_id'] = static::partyAvatar($partyUserInfo['avatarUrl']);
+        // }
         return $data;
     }
 

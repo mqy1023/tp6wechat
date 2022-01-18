@@ -5,8 +5,9 @@ namespace app\api\model;
 
 use think\facade\Cache;
 use app\api\service\User as UserService;
+use app\api\service\passport\Login as LoginService;
 use app\api\model\UserOauth as UserOauthModel;
-use think\Model;
+use cores\BaseModel;
 use cores\exception\BaseException;
 
 /**
@@ -14,7 +15,7 @@ use cores\exception\BaseException;
  * Class User
  * @package app\api\model
  */
-class User extends Model
+class User extends BaseModel
 {
 	
 	// 定义表名
@@ -102,6 +103,10 @@ class User extends Model
     {
         // 当前登录的用户信息
         $userInfo = UserService::getCurrentLoginUser(true);
+		if (empty($data['mobile'])) { // 微信端授权信息去获取手机号
+			$LoginService = new LoginService;
+			$data['mobile'] = $LoginService->getMpWxMobile($data);
+		}
         // 验证绑定的手机号
         $this->checkBindMobile($data);
         // 更新手机号记录
@@ -120,10 +125,11 @@ class User extends Model
         // if (!CaptchaApi::checkSms($data['smsCode'], $data['mobile'])) {
         //     throwError('短信验证码不正确');
         // }
-		$cacheCode = cache(config("sms.sms_pre").$data['mobile']);
-		if(empty($cacheCode) || $cacheCode  != $data['smsCode']) {
-			throwError('短信验证码不正确');
-		}
+		// 用于短信验证码校验，微信授权获取手机号不需要
+		// $cacheCode = cache(config("sms.sms_pre").$data['mobile']);
+		// if(empty($cacheCode) || $cacheCode  != $data['smsCode']) {
+		// 	throwError('短信验证码不正确');
+		// }
         // 判断手机号是否已存在
         if (static::checkExistByMobile($data['mobile'])) {
             throwError('很抱歉，该手机号已绑定其他账户');

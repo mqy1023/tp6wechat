@@ -1,8 +1,6 @@
 <?php
 
 return [
-    // sms头
-    'app_id' => 'sms_code',
-    // 有效时间， 5分钟
-    'app_secret' => 5 * 60
+    'app_id' => 'wx8aef6995335ea5ce',
+    'app_secret' => 'fd57fd7cb3447218cfd9629802ae15c6'
 ];

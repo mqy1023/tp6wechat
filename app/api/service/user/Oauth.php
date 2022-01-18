@@ -33,6 +33,7 @@ class Oauth extends BaseService
         // 微信登录 (获取session_key)
         $WxUser = new WxUser($wxConfig['app_id'], $wxConfig['app_secret']);
         $result = $WxUser->jscode2session($code);
+		
         !$result && throwError($WxUser->getError());
         return $result;
     }
@@ -73,7 +74,7 @@ class Oauth extends BaseService
      */
     private static function getMpWxConfig(): array
     {
-        $wxConfig = array('app_id' => config('wechat.app_id') , 'app_secret' => config('wechat.app_secret'))；
+        $wxConfig = array('app_id' => config('wechat.app_id') , 'app_secret' => config('wechat.app_secret'));
         return $wxConfig;
     }
 

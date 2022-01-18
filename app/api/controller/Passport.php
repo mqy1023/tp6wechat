@@ -30,4 +30,28 @@ class Passport extends Controller
             'token' => $LoginService->getToken((int)$userInfo['user_id'])
         ], '登录成功');
     }
+	
+	/**
+	 * 快捷登录: 微信小程序授权手机号登录
+	 * @return array|\think\response\Json
+	 * @throws \app\common\exception\BaseException
+	 * @throws \think\Exception
+	 * @throws \think\db\exception\DataNotFoundException
+	 * @throws \think\db\exception\DbException
+	 * @throws \think\db\exception\ModelNotFoundException
+	 */
+	public function loginMpWxMobile()
+	{
+	    // 微信小程序一键登录
+	    $LoginService = new LoginService;
+	    if (!$LoginService->loginMpWxMobile($this->postForm())) {
+	        return $this->renderError($LoginService->getError());
+	    }
+	    // 获取登录成功后的用户信息
+	    $userInfo = $LoginService->getUserInfo();
+	    return $this->renderSuccess([
+	        'userId' => (int)$userInfo['user_id'],
+	        'token' => $LoginService->getToken((int)$userInfo['user_id'])
+	    ], '登录成功');
+	}
 }
