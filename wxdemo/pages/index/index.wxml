@@ -1,0 +1,26 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <block wx:if="{{canIUseOpenData}}">
+      <view class="userinfo-avatar" bindtap="bindViewTap">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <open-data type="userNickName"></open-data>
+    </block>
+    <view style="margin-top: 4vh;">
+      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 点击授权获取微信用户信息注册登录 </button>
+      <view class="tip">授权注册后，可以继续绑定手机号到新注册账号中</view>
+      <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumberBindAcc" style="margin-top: 2vh;">一键获取微信手机号并绑定到上面注册的账号中</button>
+    </view>
+    <view style="margin-top: 9vh;">
+      <view class="tip">将上面的授权和手机号绑定合并成一起</view>
+      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfileForMobileRegister"> 授权获取微信用户信息 </button>
+      <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style="margin-top: 2vh;">微信手机号一键注册登录</button>
+    </view>
+
+    <view style="margin-top: 9vh">
+      <view class="tip">上面两种方式注册成功后可获取用户信息</view>
+      <button bindtap="getWxUserInfo"> 获取当前用户信息 </button>
+    </view>
+  </view>
+</view>
