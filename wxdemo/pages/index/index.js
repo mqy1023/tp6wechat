@@ -40,7 +40,7 @@ Page({
 
     console.log('wxCode=', wxCode)
     wx.request({
-      url: 'http://tp6wechat.com:8383/api/passport/loginMpWx',
+      url: 'http://tpdemo.com:8383/api/passport/loginMpWx',
       method: 'POST',
       header: {
         'platform': 'MP-WEIXIN'
@@ -109,7 +109,7 @@ Page({
     }
     const wxCode = await this.getWxLoginCode()
     wx.request({
-      url: 'http://tp6wechat.com:8383/api/user/bindMobile',
+      url: 'http://tpdemo.com:8383/api/user/bindMobile',
       method: 'POST',
       header: {
         'platform': 'MP-WEIXIN',
@@ -157,7 +157,7 @@ Page({
     }
     const wxCode = await this.getWxLoginCode()
     wx.request({
-      url: 'http://tp6wechat.com:8383/api/passport/loginMpWxMobile',
+      url: 'http://tpdemo.com:8383/api/passport/loginMpWxMobile',
       method: 'POST',
       header: {
         'platform': 'MP-WEIXIN'
@@ -190,7 +190,7 @@ Page({
   },
   getWxUserInfo(e) {
     wx.request({
-      url: 'http://tp6wechat.com:8383/api/user/info',
+      url: 'http://tpdemo.com:8383/api/user/info',
       header: {
         'platform': 'MP-WEIXIN',
         'Access-Token': token

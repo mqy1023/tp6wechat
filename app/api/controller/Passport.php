@@ -5,6 +5,10 @@ use app\api\service\passport\Login as LoginService;
 
 class Passport extends Controller
 {
+    public function test()
+    {
+        var_dump('test test');
+    }
     /**
      * 微信小程序快捷登录 (需提交wx.login接口返回的code、微信用户公开信息)
      * 业务流程：判断openid是否存在 -> 存在:  更新用户登录信息 -> 返回userId和token

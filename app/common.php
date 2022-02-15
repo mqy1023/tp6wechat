@@ -121,3 +121,23 @@ function hide_mobile(string $mobile): string
 {
     return substr_replace($mobile, '****', 3, 4);
 }
+
+/**
+ * 检查目录是否可写
+ * @param $path
+ * @return bool
+ */
+function checkWriteable($path): bool
+{
+    try {
+        !is_dir($path) && mkdir($path, 0755);
+        if (!is_dir($path))
+            return false;
+        $fileName = $path . '/_test_write.txt';
+        if ($fp = fopen($fileName, 'w')) {
+            return fclose($fp) && unlink($fileName);
+        }
+    } catch (\Exception $e) {
+    }
+    return false;
+}
